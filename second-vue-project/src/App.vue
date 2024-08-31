@@ -3,22 +3,19 @@ import { onMounted, ref, watch } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
 import TheWelcome from "./components/TheWelcome.vue";
 
-const dragonBalls = ref({});
+let todosData = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await fetch("https://dragonball-api.com/api/characters");
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
     const data = await response.json();
 
-    dragonBalls.value = [data];
+
+    todosData.value = data;
   } catch (error) {
-    console.error("Failed to fetch data:", error);
+    console.error("Error fetching data:", error); // Handle any errors
   }
 });
-watch(dragonBalls, async (newDragonBalls) => {
-  console.log(newDragonBalls);
-});
-
 </script>
 
 <template>
@@ -31,6 +28,13 @@ watch(dragonBalls, async (newDragonBalls) => {
   </header>
 
   <main>
-    <TheWelcome />
+    <div v-if="todosData.length">
+      <ul>
+        <li v-for="todo in todosData" :key="todo.id">
+          {{ todo.title }}
+        </li>
+      </ul>
+    </div>
+    <p v-else>Loading...</p>
   </main>
 </template>
