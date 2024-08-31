@@ -19,7 +19,6 @@ watch(dragonBalls, async (newDragonBalls) => {
   console.log(newDragonBalls);
 });
 
-console.log(dragonBalls.value);
 </script>
 
 <template>
