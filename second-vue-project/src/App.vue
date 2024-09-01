@@ -1,39 +1,79 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
-
-let todosData = ref([]);
-
-onMounted(async () => {
+import Logo from "../src/assets/pokemon-logo.png";
+const pokemonData = ref([]);
+const searchQuery = ref("pikachu");
+const loading = ref(true);
+const fetchedPokemonData = async (query) => {
+  loading.value = true;
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos/");
-    const data = await response.json();
+    const response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${query.toLowerCase()}`
+    );
 
-    todosData.value = data;
+    if (response.ok) {
+      const data = await response.json();
+
+      pokemonData.value = data;
+      console.log(data);
+    } else {
+      pokemonData.value = null;
+    }
   } catch (error) {
     console.error("Error fetching data:", error); // Handle any errors
+  } finally {
+    loading.value = false;
+  }
+};
+onMounted(() => {
+  fetchedPokemonData(searchQuery.value);
+});
+watch(searchQuery, (newQuery) => {
+  if (newQuery) {
+    fetchedPokemonData(newQuery);
   }
 });
-const deleteTodo = (id) => {
-  todosData.value = todosData.value.filter((todo) => todo.id !== id);
-};
+
+console.log(pokemonData.value);
 </script>
 
 <template>
-  <main class="p-5">
-    <h1 class="text-2xl font-bold mt-5">PokemonAPI</h1>
-    <div v-if="todosData.length">
-      <ul class="flex justify-start flex-wrap">
-        <li
-          class="p-5 bg-gray-300 m-2 rounded-lg"
-          v-for="todo in todosData"
-          :key="todo.id"
-        >
-          {{ todo.title }}
-          <button class="bg-red-500 p-2 rounded-lg" @click="deleteTodo(todo.id)">
-            Delete
-          </button>
-        </li>
-      </ul>
+  <main class="flex justify-center items-center p-5">
+    <div class="lg:w-1/2">
+      <div class="flex justify-center">
+      <img :src="Logo" alt="Pokemon Logo" class="mb-10">
+       
+      </div>
+      <label>Search Pokemon</label>
+      <input
+        type="text"
+        v-model="searchQuery"
+        class="mt-2 input input-bordered w-full"
+        placeholder="Search pokemon..."
+      />
+      <div v-if="loading" class="mt-2">
+        <p class="text-center">Loading....</p>
+      </div>
+      <div v-else >
+        <div v-if="pokemonData" class="card w-96 border mt-10">
+          <figure class="bg-secondary">
+            <img
+              :src="pokemonData.sprites.front_default"
+              :alt="pokemonData.name"
+              class="w-52"
+            />
+          </figure>
+          <div className="card-body">
+            <p class="mt-3"><strong>Name:</strong> {{ pokemonData.name }}</p>
+            <p><strong>Base Experience:</strong> {{ pokemonData.base_experience }}</p>
+            <p><strong>Height:</strong> {{ pokemonData.height }}</p>
+            <p><strong>Weight:</strong> {{ pokemonData.weight }}</p>
+          </div>
+        </div>
+        <div v-else class="text-center mt-4">
+          <p class="mt-3 text-red-500">Pokemon not found</p>
+        </div>
+      </div>
     </div>
   </main>
 </template>
