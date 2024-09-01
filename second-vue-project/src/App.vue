@@ -38,13 +38,13 @@ console.log(pokemonData.value);
 </script>
 
 <template>
-  <main class="flex justify-center items-center p-5">
+  <main class=" flex justify-center items-center p-5 min-h-screen">
     <div class="lg:w-1/2">
       <div class="flex justify-center">
       <img :src="Logo" alt="Pokemon Logo" class="mb-10">
        
       </div>
-      <label>Search Pokemon</label>
+      <label>Search Pokemon Species</label>
       <input
         type="text"
         v-model="searchQuery"
@@ -55,7 +55,7 @@ console.log(pokemonData.value);
         <p class="text-center">Loading....</p>
       </div>
       <div v-else >
-        <div v-if="pokemonData" class="card w-96 border mt-10">
+        <div v-if="pokemonData" class="card w-full border mt-10">
           <figure class="bg-secondary">
             <img
               :src="pokemonData.sprites.front_default"
