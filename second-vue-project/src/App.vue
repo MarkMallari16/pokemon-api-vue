@@ -36,6 +36,8 @@ watch(searchQuery, (newQuery) => {
     fetchedPokemonData(newQuery);
   }
 });
+
+
 </script>
 
 <template>
