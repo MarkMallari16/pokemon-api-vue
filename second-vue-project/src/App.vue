@@ -1,7 +1,9 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import Logo from "../src/assets/pokemon-logo.png";
+
 import PokemonCard from "./components/PokemonCard.vue";
+import ChildComponent from "./components/ChildComponent.vue";
 
 const pokemonData = ref([]);
 const searchQuery = ref("pikachu");
@@ -36,12 +38,10 @@ watch(searchQuery, (newQuery) => {
     fetchedPokemonData(newQuery);
   }
 });
-
-
 </script>
 
 <template>
-  <main class="flex justify-center items-center p-5 min-h-screen">
+  <main class="flex justify-center items-center p-5 min-h-screen bg-blue-50">
     <div class="lg:w-1/2">
       <div class="flex justify-center">
         <img :src="Logo" alt="Pokemon Logo" class="mb-10" />
@@ -82,7 +82,7 @@ watch(searchQuery, (newQuery) => {
           />
         </svg>
       </div>
-      <div v-if="loading" class="mt-2">
+      <div v-if="loading" class="mt-4">
         <p class="text-center">Loading....</p>
       </div>
       <div v-else>
@@ -90,4 +90,9 @@ watch(searchQuery, (newQuery) => {
       </div>
     </div>
   </main>
+  <ChildComponent>
+    <template v-slot:footer>
+      <h1 class="text-center text-gray-600">&copy; Mark Mallari</h1>
+    </template>
+  </ChildComponent>
 </template>

@@ -1,4 +1,5 @@
 <script setup>
+import PokemonBall from "../../src/assets/pokemon-ball.png";
 defineProps({
   pokemonData: {
     type: Object,
@@ -22,7 +23,10 @@ defineProps({
       <p><strong>Weight:</strong> {{ pokemonData.weight }}</p>
     </div>
   </div>
-  <div v-else class="text-center mt-4">
-    <p class="mt-3 text-red-500">Pokemon not found</p>
+  <div v-else class="mt-4 flex justify-center">
+    <div>
+      <img :src="PokemonBall" alt="Pokemon Ball" class="w-36" />
+      <p class="mt-3 text-red-500 font-bold">Pokemon not found</p>
+    </div>
   </div>
 </template>
