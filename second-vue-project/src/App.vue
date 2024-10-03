@@ -3,7 +3,7 @@ import { onMounted, ref, watch } from "vue";
 import Logo from "../src/assets/pokemon-logo.png";
 
 import PokemonCard from "./components/PokemonCard.vue";
-import ChildComponent from "./components/ChildComponent.vue";
+import Footer from "./components/Footer.vue";
 
 const pokemonData = ref([]);
 const searchQuery = ref("pikachu");
@@ -41,7 +41,7 @@ watch(searchQuery, (newQuery) => {
 </script>
 
 <template>
-  <main class="flex justify-center items-center p-5 min-h-screen bg-blue-50">
+  <main class="flex justify-center items-center p-5 min-h-screen ">
     <div class="lg:w-1/2">
       <div class="flex justify-center">
         <img :src="Logo" alt="Pokemon Logo" class="mb-10" />
@@ -73,7 +73,7 @@ watch(searchQuery, (newQuery) => {
           fill="currentColor"
           class="size-6 absolute top-5 right-5 cursor-pointer"
           v-if="searchQuery"
-          @click="searchQuery = ''"
+          @click="searchQuery= ''"
         >
           <path
             fill-rule="evenodd"
@@ -90,9 +90,9 @@ watch(searchQuery, (newQuery) => {
       </div>
     </div>
   </main>
-  <ChildComponent>
+  <Footer>
     <template v-slot:footer>
-      <h1 class="text-center text-gray-600">&copy; Mark Mallari</h1>
+      <h1 class="text-center text-gray-600"> &copy; {{ new Date().getFullYear() }} Mark Mallari</h1>
     </template>
-  </ChildComponent>
+  </Footer>
 </template>

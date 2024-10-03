@@ -9,7 +9,7 @@ defineProps({
 </script>
 <template>
   <div v-if="pokemonData" class="card w-full border mt-10">
-    <figure class="bg-secondary">
+    <figure class="bg-base-content">
       <img
         :src="pokemonData.sprites.front_default"
         :alt="pokemonData.name"
@@ -23,6 +23,7 @@ defineProps({
       <p><strong>Weight:</strong> {{ pokemonData.weight }}</p>
     </div>
   </div>
+
   <div v-else class="mt-4 flex justify-center">
     <div>
       <img :src="PokemonBall" alt="Pokemon Ball" class="w-36" />

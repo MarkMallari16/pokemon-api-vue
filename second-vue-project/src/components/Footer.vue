@@ -10,8 +10,8 @@
 </template> -->
 
 <template>
-    <div>
+    <footer>
         <slot name="footer">
         </slot>
-    </div>
+    </footer>
 </template>
