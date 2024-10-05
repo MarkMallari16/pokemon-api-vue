@@ -11,6 +11,7 @@ const loading = ref(true);
 
 const fetchedPokemonData = async (query) => {
   loading.value = true;
+  
   try {
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${query.toLowerCase()}`
